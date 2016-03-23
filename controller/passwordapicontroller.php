@@ -15,6 +15,12 @@ class PasswordApiController extends ApiController {
 	use Errors;
 
 	public function __construct($AppName, IRequest $request, PasswordService $service, $UserId) {
+		
+		$version = \OC::$server->getConfig()->getAppValue('passwords', 'installed_version', '');
+		if (version_compare($version, '17.0', '<')) {
+			return false;	
+		}
+
 		// allow getting passwords and editing/saving them
 		parent::__construct(
 			$AppName,
