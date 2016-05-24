@@ -1,4 +1,10 @@
 <ul>
+	<?php
+	$auth_type = OC::$server->getConfig()->getUserValue(OC::$server->getUserSession()->getUser()->getUID(), 'passwords', 'extra_auth_type', 'owncloud');
+	$show_lock = OC::$server->getConfig()->getUserValue(OC::$server->getUserSession()->getUser()->getUID(), 'passwords', 'show_lockbutton', 'true') == 'true';
+	if ($auth_type != 'none' && $show_lock) { ?>
+		<input id="lock_btn" class="button" type="button" value="<?php p(strtoupper($l->t("Lock"))); ?>">
+	<?php } ?>
 	<li id="list_active" class="with-counter active">
 		<a href="#"><?php p($l->t("Active passwords")); ?></a>
 		<div class="app-navigation-entry-utils">
