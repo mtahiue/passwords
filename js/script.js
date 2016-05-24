@@ -857,6 +857,11 @@
 			},
 			renderNavigation: function() {
 
+				// lock down app
+				$('#lock_btn').click(function() {
+					window.location = OC.generateUrl('/apps/passwords/');
+				});
+
 				// set settings
 				var settings = new Settings(OC.generateUrl('/apps/passwords/settings'));
 				settings.load();
