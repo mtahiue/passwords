@@ -52,3 +52,20 @@
 #passwords-personal #timersettext {
 	display: none;
 }
+#passwords-personal #div_master_password {
+	margin-left: 30px;
+	margin-bottom: 30px;
+}
+#passwords-personal #old_masterkey,
+#passwords-personal #new_masterkey1,
+#passwords-personal #new_masterkey2 {
+	width: 200px;
+}
+#passwords-personal .hide_old_pass,
+#passwords-personal #div_master_password {
+	display: none;
+}
+#passwords-personal #icons_show_div {
+	margin-top: 20px;
+}
+
