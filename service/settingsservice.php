@@ -31,10 +31,13 @@ class SettingsService {
 				'icons_allowed' => (string)$this->settings->getAppValue($this->appName, 'icons_allowed', 'true'),
 				'icons_service' => (string)$this->settings->getAppValue($this->appName, 'icons_service', 'ddg'),
 				// user settings
+				'extra_auth_type' => (string)$this->settings->getUserValue($this->userId, $this->appName, 'extra_auth_type', 'owncloud'),
 				'hide_attributes' => (string)$this->settings->getUserValue($this->userId, $this->appName, 'hide_attributes', 'false'),
 				'hide_passwords' => (string)$this->settings->getUserValue($this->userId, $this->appName, 'hide_passwords', 'true'),
 				'hide_usernames' => (string)$this->settings->getUserValue($this->userId, $this->appName, 'hide_usernames', 'false'),
+				'master_password' => (string)$this->settings->getUserValue($this->userId, $this->appName, 'master_password', '0'),
 				'icons_show' => (string)$this->settings->getUserValue($this->userId, $this->appName, 'icons_show', 'true'),
+				'show_lockbutton' => (string)$this->settings->getUserValue($this->userId, $this->appName, 'show_lockbutton', 'true'),
 				'timer' => (string)$this->settings->getUserValue($this->userId, $this->appName, 'timer', '60')
 		);
 		return $settings;
