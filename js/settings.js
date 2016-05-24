@@ -16,6 +16,8 @@
 //		Service used for website icons: Google (ggl), DuckDuckGo (ddg)
 
 // USER SETTINGS
+// extra_auth_type
+//		Extra authentication to enter the app: none (none), ownCloud password (owncloud), master password (master)
 // hide_attributes
 //		Hide the attributes strength and last changed date
 // hide_passwords
@@ -24,6 +26,8 @@
 //		Hide usernames by showing them as '*****'
 // icons_show
 //		Show website icons, using service selected by admin
+// master_password
+//		SHA-2 (512-bit) password that is needed to enter the app
 // timer
 //		Use countdown timer, user will be logged off when it reaches 0
 
@@ -163,6 +167,15 @@ $(document).ready(function() {
 // PERSONAL SETTINGS
 	
 	// fill the boxes
+	$('#extra_password').val(settings.getKey('extra_auth_type'));
+	if (settings.getKey('extra_auth_type') == 'master') {
+		$('#div_master_password').show();
+	}
+	$('#show_lockbutton').prop('checked', (settings.getKey('show_lockbutton').toLowerCase() == 'true'));
+	if (settings.getKey('extra_auth_type') == 'none') {
+		$('#show_lockbutton_div').hide();
+	}
+
 	if (settings.getKey('icons_allowed').toLowerCase() == 'true') {
 		$('#icons_show').prop('checked', (settings.getKey('icons_show').toLowerCase() == 'true'));
 	} else {
@@ -191,6 +204,72 @@ $(document).ready(function() {
 
 
 	// Personal settings
+	$('#extra_password').change(function () {
+		var old_value = settings.getKey('extra_auth_type');
+		var new_value = $('#extra_password option:selected').val();
+
+		if (new_value == 'master' || new_value == 'owncloud') {
+			$('#show_lockbutton_div').show();
+		} else {
+			$('#show_lockbutton_div').hide();
+		}
+
+		if ((new_value != old_value) && old_value == 'master') {
+			var release = window.prompt(t('passwords', 'Master password') + ':');
+			if (SHA512(release) != settings.getKey('master_password')) {
+				alert(t('passwords', 'This password is invalid. Please try again.'));
+				$('#extra_password').val('master');
+				$('#show_lockbutton_div').show();
+				return false;
+			} else if (release == '') {
+				$('#extra_password').val('master');
+				$('#show_lockbutton_div').show();
+				return false;
+			}
+		}
+		if (new_value != 'master') {
+			settings.setUserKey('extra_auth_type', new_value);
+			$('#div_master_password').hide(300);
+			// remove master key and hide old master password field
+			$('#old_masterkey').addClass('hide_old_pass');
+			settings.setUserKey('master_password', '0');
+			if (old_value == 'master') {
+				OCdialogs.info(t('passwords', 'The master password has been removed.'), t('passwords', 'Master password'), null, true);
+			}
+			alert(settings.getKey('extra_auth_type'));
+			//old_value = new_value;
+		} else {
+			// do not save yet
+			$('#div_master_password').show(300);
+		}
+	});
+
+	$('#save_masterkey').click(function () {
+		var old_database = settings.getKey('master_password');
+		var old_textinput = SHA512($('#old_masterkey').val());
+		if (old_database == '0' || (old_database == old_textinput)) {
+			var new_pass1 = $('#new_masterkey1').val();
+			var new_pass2 = $('#new_masterkey2').val();
+			if (new_pass1 == new_pass2) {
+				settings.setUserKey('extra_auth_type', 'master');
+				settings.setUserKey('master_password', SHA512(new_pass1));
+				OCdialogs.info(t('passwords', 'The master password has been set.'), t('passwords', 'Master password'), null, true);
+				$('#old_masterkey').removeClass('hide_old_pass');
+				$('#old_masterkey').val('');
+				$('#new_masterkey1').val('');
+				$('#new_masterkey2').val('');
+			} else {
+				OCdialogs.alert(t('passwords', 'The new passwords do not match.'), t('passwords', 'Master password'), null, true);
+			}
+		} else {
+			OCdialogs.alert(t('passwords', 'The old password is wrong.'), t('passwords', 'Master password'), null, true);
+		}
+	});
+
+	$('#show_lockbutton').change(function () {
+		settings.setUserKey('show_lockbutton', $(this).is(":checked"));
+	});
+
 	$('#icons_show').change(function () {
 		settings.setUserKey('icons_show', $(this).is(":checked"));
 	});
