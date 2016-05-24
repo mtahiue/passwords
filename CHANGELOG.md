@@ -1,6 +1,9 @@
 ####18.1 - NOT YET RELEASED
+* Added extra authentication when entering app. Users can choose for ownCloud password or a master password. A master password will be encrypted with an SHA2-hash (512-bit; amount of possibilities: 1 with 154 zeros).
+* Added lock button as option for users who have set an extra authentication
 * Added 'Stop sharing' button to popup
 * Added Danish, Russian and Turkish. Now available in 20 languages: English, German, Spanish, French, Italian, Dutch, Danish, Czech, Norwegian Bokmål, Russian, Polish, Portuguese (Brazil), Portuguese (Portugal), Turkish, Swedish, Catalan, Hebrew, Albanian, Icelandic and Galician.
+* Changed checkboxes to fit style of ownCloud 9
 * Fix for notes and categories not being saved on unshared passwords
 * Fix for sharing with users whose username contains a `.` or `@`
 * Fix for SQLite databases
