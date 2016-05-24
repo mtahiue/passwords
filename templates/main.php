@@ -23,35 +23,53 @@
 	// check if secure (https)
 	if (isSecure()) {
 
-		script('passwords', 'handlebars');
-		script('passwords', 'script');
-		script('passwords', 'sorttable');
-		script('passwords', 'spectrum'); // colour picker
-		script('passwords', 'ZeroClipboard'); // clipboard function
-?>
+		script('passwords', 'sha512'); // hash function for master password
+		$auth_type = OC::$server->getConfig()->getUserValue(OC::$server->getUserSession()->getUser()->getUID(), 'passwords', 'extra_auth_type', 'owncloud');
+		$auth_master = hash('sha512', OC::$server->getUserSession()->getUser()->getUID() . OC::$server->getConfig()->getUserValue(OC::$server->getUserSession()->getUser()->getUID(), 'passwords', 'master_password', '0')) == $_GET['token'];
 
-	<div id="app">
-		<div id="app-navigation">
-			<?php print_unescaped($this->inc('part.navigation')); ?>
-			<?php print_unescaped($this->inc('part.settings')); ?>
-		</div>
+		if ($auth_type == 'owncloud' OR ($auth_type == 'master' AND $auth_master == false)) { 
 
-		<div id="app-content">
-			<div id="app-content-wrapper">
-				<?php print_unescaped($this->inc('part.content')); ?>
+			script('passwords', 'auth'); ?>
+			
+			<div id="app">
+				<div id="app-content">
+					<div id="app-content-wrapper">
+						<?php print_unescaped($this->inc('part.authenticate')); ?>
+					</div>
+				</div>
 			</div>
-			<div id="app-sidebar-wrapper">
-				<?php print_unescaped($this->inc('part.sidebar')); ?>
+
+		<?php } else { 
+
+			script('passwords', 'handlebars');
+			script('passwords', 'script');
+			script('passwords', 'sorttable');
+			script('passwords', 'spectrum'); // colour picker
+			script('passwords', 'ZeroClipboard'); // clipboard function
+			?>
+
+			<div id="app">
+				<div id="app-navigation">
+					<?php print_unescaped($this->inc('part.navigation')); ?>
+					<?php print_unescaped($this->inc('part.settings')); ?>
+				</div>
+
+				<div id="app-content">
+					<div id="app-content-wrapper">
+						<?php print_unescaped($this->inc('part.content')); ?>
+					</div>
+					<div id="app-sidebar-wrapper">
+						<?php print_unescaped($this->inc('part.sidebar')); ?>
+					</div>
+				</div>
 			</div>
-		</div>
-	</div>
+	<?php } ?>
 
 <?php } else {
 	\OCP\Util::writeLog('passwords', 'Passwords app blocked; no secure connection.', \OCP\Util::ERROR);
 ?>
 
 	<div id="app">
-
 		<div id="app-content">
 			<div id="app-content-wrapper">
 				<?php print_unescaped($this->inc('part.blocked')); ?>
