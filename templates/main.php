@@ -25,7 +25,11 @@
 
 		script('passwords', 'sha512'); // hash function for master password
 		$auth_type = OC::$server->getConfig()->getUserValue(OC::$server->getUserSession()->getUser()->getUID(), 'passwords', 'extra_auth_type', 'owncloud');
-		$auth_master = hash('sha512', OC::$server->getUserSession()->getUser()->getUID() . OC::$server->getConfig()->getUserValue(OC::$server->getUserSession()->getUser()->getUID(), 'passwords', 'master_password', '0')) == $_GET['token'];
+		if (isset($_GET['token'])) {
+			$auth_master = hash('sha512', OC::$server->getUserSession()->getUser()->getUID() . OC::$server->getConfig()->getUserValue(OC::$server->getUserSession()->getUser()->getUID(), 'passwords', 'master_password', '0')) == $_GET['token'];
+		} else {
+			$auth_master = false;
+		}
 
 		if ($auth_type == 'owncloud' OR ($auth_type == 'master' AND $auth_master == false)) { 
 
