@@ -75,7 +75,7 @@
 			<input type="text" id="timer" value="0"> <em id="timersettext"> <?php p($l->t('seconds')); ?> </em>
 		</label>
 		<p>
-			<?php p($l->t("This will put a timer on the lower right of the screen, which resets on activity.") . " " . $l->t("You will be logged off automatically when this countdown reaches 0")); ?>.
+			<?php p($l->t("This will put a timer on the lower right of the screen, which resets on activity.") . " " . $l->t("You will be logged off automatically when this countdown reaches 0") . ", " . " " . $l->t("or (if you've set an extra authentication password) the app will be locked down")); ?>.
 		</p>
 		<p>
 			<?php p($l->t("Setting a countdown will log you off too when your session cookie ends (set to %s seconds by your administrator)", \OC::$server->getConfig()->getSystemValue('session_lifetime', 60*15))); ?>.
