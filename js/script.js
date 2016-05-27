@@ -859,7 +859,7 @@
 
 				// lock down app
 				$('#lock_btn').click(function() {
-					window.location = OC.generateUrl('/apps/passwords/');
+					window.location = OC.generateUrl('/apps/passwords');
 				});
 
 				// set settings
@@ -885,6 +885,7 @@
 				$('#app-settings').attr('hide-passwords', settings.getKey('hide_passwords').toLowerCase() == 'true');
 				$('#app-settings').attr('hide-usernames', settings.getKey('hide_usernames').toLowerCase() == 'true');
 				$('#app-settings').attr('hide-attributes', settings.getKey('hide_attributes').toLowerCase() == 'true');
+				$('#app-settings').attr('auth_type', settings.getKey('extra_auth_type'));
 
 				// set timer if set by user
 				if ($('#app-settings').attr('timer') != '0') {
@@ -2983,11 +2984,21 @@ function resetTimer(kill_old) {
 					+ '\n\n'
 					+ t('passwords', "You can change the timer settings in the '%s' menu.").replace('%s', t('core', 'Personal'))
 				);
-			window.location = document.getElementById('logout').href;
+			if ($('#app-settings').attr('auth_type') == 'none') {
+				window.location = document.getElementById('logout').href;
+			} else {
+				// lock app
+				window.location = OC.generateUrl('/apps/passwords');
+			}
 		}
 		if (session_timeout <= 0) {
 			alert(t('passwords', 'You will be logged off due to expiration of your session cookie (set to %s minutes).').replace('%s', int2time($('#app-settings').attr('session-timeout'), true)));
-			window.location = document.getElementById('logout').href;
+			if ($('#app-settings').attr('auth_type') == 'none') {
+				window.location = document.getElementById('logout').href;
+			} else {
+				// lock app
+				window.location = OC.generateUrl('/apps/passwords');
+			}
 		}
 	}, 1000);
 
