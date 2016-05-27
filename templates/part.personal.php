@@ -11,7 +11,9 @@
 		<label for="extra_password"><?php p($l->t('When entering app, require:')); ?></label>
 		<select id="extra_password">
 			<option value="none"><?php p($l->t('No extra password')); ?></option>
-			<option value="owncloud"><?php p($l->t('%s password', $theme->getName())); ?></option>
+			<option value="owncloud" disabled><?php 
+				// easier for translators than '%s password'
+				p(preg_replace('/owncloud/i', $theme->getName(), $l->t('ownCloud password'))); ?></option>
 			<option value="master"><?php p($l->t('Master password')); ?></option>
 		</select>
 		<br>
@@ -27,13 +29,7 @@
 			<br>
 			<?php p($l->t("Note: this will only be used for the web interface. The master password does not re-encrypt your passwords.")); ?>
 		</p>
-		<p>
-		<?php 
-			//if(OC::$server->getUserManager()->checkPassword('test', 'asdf') == false) {
-			//	p('fout');
-			//}
-			; ?>
-			</p>
+
 		<input type="password" id="old_masterkey" placeholder="Enter old master password" class="<?php p($class); ?>">
 		<br>
 		<input type="password" id="new_masterkey1" placeholder="Enter new master password">
@@ -87,5 +83,4 @@
 	</div>
 
 	<span class="msg-passwords"></span>
-
 </div>
