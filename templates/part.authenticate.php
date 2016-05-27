@@ -1,11 +1,11 @@
 <?php
-	$auth_type = OC::$server->getConfig()->getUserValue(OC::$server->getUserSession()->getUser()->getUID(), 'passwords', 'extra_auth_type', 'owncloud');
+	$auth_type = OC::$server->getConfig()->getUserValue(OC::$server->getUserSession()->getUser()->getUID(), 'passwords', 'extra_auth_type', 'none');
 	$instancename = $theme->getName();
 	$passwordsname = $l->t("Passwords");
 	$passwordsversion = OC::$server->getConfig()->getAppValue('passwords', 'installed_version', '');
 
 	if ($auth_type == 'owncloud') {
-		$auth_type = $l->t('%s password', $theme->getName());
+		$auth_type = preg_replace('/owncloud/i', $theme->getName(), $l->t('ownCloud password'));
 	} elseif ($auth_type == 'master') {
 		$auth_type = $l->t('Master password');
 	}
