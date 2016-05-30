@@ -31,7 +31,8 @@ class SettingsService {
 				'icons_allowed' => (string)$this->settings->getAppValue($this->appName, 'icons_allowed', 'true'),
 				'icons_service' => (string)$this->settings->getAppValue($this->appName, 'icons_service', 'ddg'),
 				// user settings
-				'extra_auth_type' => (string)$this->settings->getUserValue($this->userId, $this->appName, 'extra_auth_type', 'none'),
+				'auth_timer' => (string)$this->settings->getUserValue($this->userId, $this->appName, 'auth_timer', '300'),
+				'extra_auth_type' => (string)$this->settings->getUserValue($this->userId, $this->appName, 'extra_auth_type', 'owncloud'),
 				'hide_attributes' => (string)$this->settings->getUserValue($this->userId, $this->appName, 'hide_attributes', 'false'),
 				'hide_passwords' => (string)$this->settings->getUserValue($this->userId, $this->appName, 'hide_passwords', 'true'),
 				'hide_usernames' => (string)$this->settings->getUserValue($this->userId, $this->appName, 'hide_usernames', 'false'),
