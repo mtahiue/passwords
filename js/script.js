@@ -859,6 +859,9 @@
 
 				// lock down app
 				$('#lock_btn').click(function() {
+					// remove cookie
+					document.cookie = "oc_passwords_auth=" + SHA512($('head').attr('data-user')) + "; expires=Thu, 01 Jan 1970 00:00:00 UTC";
+					// and reload page, the auth will initiate
 					window.location = OC.generateUrl('/apps/passwords');
 				});
 
@@ -2975,7 +2978,7 @@ function resetTimer(kill_old) {
 			$('#countSec').css('font-size', '16px');
 		}
 		// kill on 0, 'click' on logoff entry in top right menu
-		if (settimer == 0 || session_timeout == 0) {
+		if (settimer <= 1 || session_timeout <= 1) {
 			$('#PasswordsTable table td').hide();
 		}
 		if (settimer <= 0) {
@@ -2985,19 +2988,29 @@ function resetTimer(kill_old) {
 					+ t('passwords', "You can change the timer settings in the '%s' menu.").replace('%s', t('core', 'Personal'))
 				);
 			if ($('#app-settings').attr('auth_type') == 'none') {
-				window.location = document.getElementById('logout').href;
-			} else {
-				// lock app
+				document.cookie = "oc_sessionPassphrase=; expires=Thu, 01 Jan 1970 00:00:00 UTC";
 				window.location = OC.generateUrl('/apps/passwords');
+			} else {
+				// lock app; delete cookie and reload
+				document.cookie = "oc_passwords_auth=" + SHA512($('head').attr('data-user')) + "; expires=Thu, 01 Jan 1970 00:00:00 UTC";
+				document.cookie = "oc_passwords_auth=" + SHA512($('head').attr('data-user')) + "; expires=Thu, 01 Jan 1970 00:00:00 UTC";
+				setTimeout(function() {
+					$('#lock_btn').click();
+				}, 1000);
 			}
 		}
 		if (session_timeout <= 0) {
 			alert(t('passwords', 'You will be logged off due to expiration of your session cookie (set to %s minutes).').replace('%s', int2time($('#app-settings').attr('session-timeout'), true)));
 			if ($('#app-settings').attr('auth_type') == 'none') {
-				window.location = document.getElementById('logout').href;
-			} else {
-				// lock app
+				document.cookie = "oc_sessionPassphrase=; expires=Thu, 01 Jan 1970 00:00:00 UTC";
 				window.location = OC.generateUrl('/apps/passwords');
+			} else {
+				// lock app; delete cookie and reload
+				document.cookie = "oc_passwords_auth=" + SHA512($('head').attr('data-user')) + "; expires=Thu, 01 Jan 1970 00:00:00 UTC";
+				document.cookie = "oc_passwords_auth=" + SHA512($('head').attr('data-user')) + "; expires=Thu, 01 Jan 1970 00:00:00 UTC";
+				setTimeout(function() {
+					$('#lock_btn').click();
+				}, 1000);
 			}
 		}
 	}, 1000);
