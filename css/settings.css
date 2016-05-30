@@ -45,16 +45,17 @@
 	background-color: #0a0;
 	color: #fff;
 }
-#passwords-personal #timer {
+#passwords-personal #timer ,
+#passwords-personal #auth_timer{
 	width: 30px;
-
+	text-align: center;
 }
 #passwords-personal #timersettext {
 	display: none;
 }
-#passwords-personal #div_master_password {
+#passwords-personal #div_master_password,
+#passwords-personal #div_extra_auth_password {
 	margin-left: 30px;
-	margin-bottom: 30px;
 }
 #passwords-personal #old_masterkey,
 #passwords-personal #new_masterkey1,
@@ -65,7 +66,25 @@
 #passwords-personal #div_master_password {
 	display: none;
 }
-#passwords-personal #icons_show_div {
-	margin-top: 20px;
+#passwords-personal #master_reset {
+	display: none;
+	position: fixed;
+	width: 30%;
+	left: 35%;
+	top: 35%;
+	background: #fff;
+	border: 1px solid #999;
+	text-align: center;
+	border-radius: 5px;
+	padding-top: 25px;
+	padding-bottom: 25px;
 }
-
+#passwords-personal hr {
+	width: 100%;
+	border: 0;
+	color: #ddd;
+	background-color: #ddd;
+	height: 1px;
+	margin-top: 15px;
+	margin-bottom: 15px;
+}
