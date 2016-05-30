@@ -16,6 +16,8 @@
 //		Service used for website icons: Google (ggl), DuckDuckGo (ddg)
 
 // USER SETTINGS
+// auth_timer
+//		lifetime of authorization, auth cookie will be deleted when it reaches 0
 // extra_auth_type
 //		Extra authentication to enter the app: none (none), ownCloud password (owncloud), master password (master)
 // hide_attributes
@@ -32,6 +34,15 @@
 //		Use countdown timer, user will be logged off when it reaches 0
 
 $(document).ready(function() {
+
+	// $(document.body).click(function(e){
+	// 	var $command_box = $('#master_reset');
+	// 	if (!$command_box.has(e.target).length) { // if the click was not within $command_box
+	// 		$command_box.hide(200);
+	// 		$('#extra_password').val('master');
+	// 		$('#show_lockbutton_div').show();
+	// 	}
+	// });
 
 	var Settings = function(baseUrl) {
 		this._baseUrl = baseUrl;
@@ -174,6 +185,7 @@ $(document).ready(function() {
 	$('#show_lockbutton').prop('checked', (settings.getKey('show_lockbutton').toLowerCase() == 'true'));
 	if (settings.getKey('extra_auth_type') == 'none') {
 		$('#show_lockbutton_div').hide();
+		$('#div_extra_auth_password').hide();
 	}
 
 	if (settings.getKey('icons_allowed').toLowerCase() == 'true') {
@@ -202,6 +214,12 @@ $(document).ready(function() {
 		}
 	}
 
+	$('#auth_timer').val(settings.getKey('auth_timer'));
+	if ($('#auth_timer').val() < 61) {
+		$('#auth_timersettext').text(t('passwords', 'seconds'));
+	} else {
+		$('#auth_timersettext').text(t('passwords', 'seconds') + ' (' + int2time($('#auth_timer').val()) + ' ' + t('passwords', 'minutes') + ')');
+	}
 
 	// Personal settings
 	$('#extra_password').change(function () {
@@ -210,33 +228,50 @@ $(document).ready(function() {
 
 		if (new_value == 'master' || new_value == 'owncloud') {
 			$('#show_lockbutton_div').show();
+			$('#div_extra_auth_password').show();
 		} else {
 			$('#show_lockbutton_div').hide();
+			$('#div_extra_auth_password').hide();
 		}
 
 		if ((new_value != old_value) && old_value == 'master') {
-			var release = window.prompt(t('passwords', 'Master password') + ':');
-			if (SHA512(release) != settings.getKey('master_password')) {
-				alert(t('passwords', 'This password is invalid. Please try again.'));
-				$('#extra_password').val('master');
-				$('#show_lockbutton_div').show();
-				return false;
-			} else if (release == '') {
-				$('#extra_password').val('master');
-				$('#show_lockbutton_div').show();
-				return false;
-			}
-		}
-		if (new_value != 'master') {
+			var release;
+			$('#master_reset').show(400);
+			$('#master_reset_btn').click(function() {
+				release = $('#master_reset_pass').val();
+				if (SHA512(release) != settings.getKey('master_password')) {
+					$('#master_reset_pass').val('');
+					$('#master_reset').hide(200);
+					alert(t('passwords', 'This password is invalid. Please try again.'));
+					$('#extra_password').val('master');
+					$('#show_lockbutton_div').show();
+					$('#div_extra_auth_password').show();
+					return false;
+				} else if (release == '') {
+					$('#extra_password').val('master');
+					$('#show_lockbutton_div').show();
+					$('#div_extra_auth_password').show();
+					return false;
+				} else if (SHA512(release) == settings.getKey('master_password')) {
+					settings.setUserKey('extra_auth_type', new_value);
+					$('#div_master_password').hide(300);
+					// remove master key and hide old master password field
+					$('#old_masterkey').addClass('hide_old_pass');
+					settings.setUserKey('master_password', '0');
+					if (old_value == 'master') {
+						OCdialogs.info(t('passwords', 'The master password has been removed.'), t('passwords', 'Master password'), function() { return false; }, true);
+					}
+				}
+			});
+		} else if (new_value != 'master') {
 			settings.setUserKey('extra_auth_type', new_value);
 			$('#div_master_password').hide(300);
 			// remove master key and hide old master password field
 			$('#old_masterkey').addClass('hide_old_pass');
 			settings.setUserKey('master_password', '0');
 			if (old_value == 'master') {
-				OCdialogs.info(t('passwords', 'The master password has been removed.'), t('passwords', 'Master password'), null, true);
+				OCdialogs.info(t('passwords', 'The master password has been removed.'), t('passwords', 'Master password'), function() { return false; }, true);
 			}
-			alert(settings.getKey('extra_auth_type'));
 			//old_value = new_value;
 		} else {
 			// do not save yet
@@ -253,16 +288,16 @@ $(document).ready(function() {
 			if (new_pass1 == new_pass2) {
 				settings.setUserKey('extra_auth_type', 'master');
 				settings.setUserKey('master_password', SHA512(new_pass1));
-				OCdialogs.info(t('passwords', 'The master password has been set.'), t('passwords', 'Master password'), null, true);
+				OCdialogs.info(t('passwords', 'The master password has been set.'), t('passwords', 'Master password'), function() { return false; }, true);
 				$('#old_masterkey').removeClass('hide_old_pass');
 				$('#old_masterkey').val('');
 				$('#new_masterkey1').val('');
 				$('#new_masterkey2').val('');
 			} else {
-				OCdialogs.alert(t('passwords', 'The new passwords do not match.'), t('passwords', 'Master password'), null, true);
+				OCdialogs.alert(t('passwords', 'The new passwords do not match.'), t('passwords', 'Master password'), function() { return false; }, true);
 			}
 		} else {
-			OCdialogs.alert(t('passwords', 'The old password is wrong.'), t('passwords', 'Master password'), null, true);
+			OCdialogs.alert(t('passwords', 'The old password is wrong.'), t('passwords', 'Master password'), function() { return false; }, true);
 		}
 	});
 
@@ -307,7 +342,7 @@ $(document).ready(function() {
 			settings.setUserKey('timer', 0);
 		} else {
 			if (!isNumeric($('#timer').val())) {
-				OCdialogs.alert(t('passwords', 'Fill in a number between %s and %s').replace('%s', '10').replace('%s', '3599'), t('passwords', 'Use inactivity countdown'), null, true);
+				OCdialogs.alert(t('passwords', 'Fill in a number between %s and %s').replace('%s', '10').replace('%s', '3599'), t('passwords', 'Use inactivity countdown'), function() { return false; }, true);
 				$('#timer').val(60);
 				settings.setUserKey('timer', 60);
 				return false;
@@ -321,6 +356,27 @@ $(document).ready(function() {
 				$('#timersettext').text(t('passwords', 'seconds') + ' (' + int2time($('#timer').val()) + ' ' + t('passwords', 'minutes') + ')');
 			}
 			settings.setUserKey('timer', $('#timer').val());
+		}
+	});
+	$('#auth_timer').keyup(function () {
+		if ($('#auth_timer').val() == '') {
+			settings.setUserKey('auth_timer', 0);
+		} else {
+			if (!isNumeric($('#auth_timer').val())) {
+				OCdialogs.alert(t('passwords', 'Fill in a number between %s and %s').replace('%s', '10').replace('%s', '3599'), t('passwords', 'Passwords'), function() { return false; }, true);
+				$('#auth_timer').val(300);
+				settings.setUserKey('auth_timer', 300);
+				return false;
+			}
+			if ($('#auth_timer').val() > 3599) {
+				$('#auth_timer').val(3599);
+			}
+			if ($('#auth_timer').val() < 61) {
+				$('#auth_timersettext').text(t('passwords', 'seconds'));
+			} else {
+				$('#auth_timersettext').text(t('passwords', 'seconds') + ' (' + int2time($('#auth_timer').val()) + ' ' + t('passwords', 'minutes') + ')');
+			}
+			settings.setUserKey('auth_timer', $('#auth_timer').val());
 		}
 	});
 
