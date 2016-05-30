@@ -6,20 +6,33 @@
 ?>
 <div class="section" id="passwords-personal">
 	<h2><?php p($l->t('Passwords')); ?></h2>
-
 	<div>
 		<label for="extra_password"><?php p($l->t('When entering app, require:')); ?></label>
 		<select id="extra_password">
 			<option value="none"><?php p($l->t('No extra password')); ?></option>
-			<option value="owncloud" disabled><?php 
+			<option value="owncloud"><?php 
 				// easier for translators than '%s password'
 				p(preg_replace('/owncloud/i', $theme->getName(), $l->t('ownCloud password'))); ?></option>
 			<option value="master"><?php p($l->t('Master password')); ?></option>
 		</select>
 		<br>
-		<div id="show_lockbutton_div">
-			<input class="checkbox" type="checkbox" id="show_lockbutton">
-			<label for="show_lockbutton"><?php p($l->t('Show lock button')); ?></label>
+		<div id="div_extra_auth_password">
+			<label for="auth_timer"><?php p($l->t('Stay authorized for')); ?></label>
+			<label>
+				<input type="text" id="auth_timer" value="90"> <em id="auth_timersettext"> <?php p($l->t('seconds')); ?> </em>
+				<p>
+					<?php p($l->t("This will not lock the app automatically. It only keeps you authorized to use this app when switching back from other apps. Use the inactivity countdown below to make use of auto-lock.")); ?>
+				</p>
+			</label>
+			<div id="show_lockbutton_div">
+				<input class="checkbox" type="checkbox" id="show_lockbutton">
+				<label for="show_lockbutton"><?php p($l->t('Show lock button')); ?></label>
+			</div>
+		</div>
+		<div id="master_reset">
+			<h2><?php p($l->t('Enter old master password')); ?>:</h2>
+			<input type="password" id="master_reset_pass" placeholder="<?php p($l->t('Master password')); ?>">
+			<input class="button" type="button" id="master_reset_btn" value="Authorize">
 		</div>
 	</div>
 
@@ -29,12 +42,11 @@
 			<br>
 			<?php p($l->t("Note: this will only be used for the web interface. The master password does not re-encrypt your passwords.")); ?>
 		</p>
-
-		<input type="password" id="old_masterkey" placeholder="Enter old master password" class="<?php p($class); ?>">
+		<input type="password" id="old_masterkey" placeholder="<?php p($l->t("Enter old master password")); ?>" class="<?php p($class); ?>">
 		<br>
-		<input type="password" id="new_masterkey1" placeholder="Enter new master password">
+		<input type="password" id="new_masterkey1" placeholder="<?php p($l->t("Enter new master password")); ?>">
 		<br>
-		<input type="password" id="new_masterkey2" placeholder="Confirm new master password">
+		<input type="password" id="new_masterkey2" placeholder="<?php p($l->t("Confirm new master password")); ?>">
 		<p>
 			<?php p($l->t('Note: when you lose this password, you can never enter the %s app again!',  $theme->getName() . ' ' . $l->t("Passwords"))); ?>
 		</p>
@@ -42,31 +54,7 @@
 		<br>
 	</div>
 
-	<div id="icons_show_div">
-		<input class="checkbox" type="checkbox" id="icons_show">
-		<label for="icons_show"><?php p($l->t('Show website icons')); ?></label>
-		<br><br>
-	</div>
-
-	<div>
-		<input class="checkbox" type="checkbox" id="hide_usernames">
-		<label for="hide_usernames"><?php p($l->t('Hide usernames')); ?></label>
-		<br>
-		<input class="checkbox" type="checkbox" id="hide_passwords">
-		<label for="hide_passwords"><?php p($l->t('Hide passwords')); ?></label>
-		<p>
-			<?php p($l->t("This will show values as '*****', so you will need to click on a value to actually view it. This is useful to prevent others from making screenshots or taking photos of your password list")); ?>. 
-			<br>
-			<?php p($l->t("Note: the search function will not work on hidden values")); ?>.
-		</p>
-		<br>
-	</div>
-
-	<div>
-		<input class="checkbox" type="checkbox" id="hide_attributes">
-		<label for="hide_attributes"><?php p($l->t('Hide columns') . ": '" . strtolower($l->t('Strength')) . "' & '" . strtolower($l->t('Last changed')) . "'"); ?></label>
-		<br><br>
-	</div>
+	<hr>
 
 	<div>
 		<input class="checkbox" type="checkbox" id="timer_bool">
@@ -82,5 +70,37 @@
 		</p>
 	</div>
 
+	<hr>
+
+	<div id="icons_show_div">
+		<input class="checkbox" type="checkbox" id="icons_show">
+		<label for="icons_show"><?php p($l->t('Show website icons')); ?></label>
+		<br>
+	</div>
+
+	<hr>
+
+	<div>
+		<input class="checkbox" type="checkbox" id="hide_usernames">
+		<label for="hide_usernames"><?php p($l->t('Hide usernames')); ?></label>
+		<br>
+		<input class="checkbox" type="checkbox" id="hide_passwords">
+		<label for="hide_passwords"><?php p($l->t('Hide passwords')); ?></label>
+		<p>
+			<?php p($l->t("This will show values as '*****', so you will need to click on a value to actually view it. This is useful to prevent others from making screenshots or taking photos of your password list")); ?>. 
+			<br>
+			<?php p($l->t("Note: the search function will not work on hidden values")); ?>.
+		</p>
+	</div>
+
+	<hr>
+
+	<div>
+		<input class="checkbox" type="checkbox" id="hide_attributes">
+		<label for="hide_attributes"><?php p($l->t('Hide columns') . ": '" . strtolower($l->t('Strength')) . "' & '" . strtolower($l->t('Last changed')) . "'"); ?></label>
+		<br>
+	</div>
+
 	<span class="msg-passwords"></span>
+
 </div>
