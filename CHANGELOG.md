@@ -1,5 +1,5 @@
 ####18.1 - NOT YET RELEASED
-* Added extra authentication when entering app. Users can choose for ownCloud password or a master password. A master password will be encrypted with an SHA2-hash (512-bit; amount of possibilities: 1 with 154 zeros).
+* Added extra authentication when entering app. Users can choose for their own ownCloud password or a master password. A master password will be encrypted with an SHA2-hash (512-bit; amount of possibilities: 1 with 154 zeros).
 * Added lock button as option for users who have set an extra authentication
 * Added 'Stop sharing' button to popup
 * Added Danish, Romanian, Russian and Turkish. Now available in 21 languages: English, German, Spanish, French, Italian, Dutch, Danish, Czech, Norwegian Bokmål, Russian, Polish, Portuguese (Brazil), Portuguese (Portugal), Turkish, Swedish, Catalan, Hebrew, Romanian, Albanian, Icelandic and Galician.
