@@ -19,19 +19,14 @@
 
 	style('passwords', 'style');
 	style('passwords', 'spectrum'); // colour picker
+	script('passwords', 'sha512'); // hash function
 
 	// check if secure (https)
 	if (isSecure()) {
 
-		script('passwords', 'sha512'); // hash function for master password
-		$auth_type = OC::$server->getConfig()->getUserValue(OC::$server->getUserSession()->getUser()->getUID(), 'passwords', 'extra_auth_type', 'owncloud');
-		if (isset($_GET['token'])) {
-			$auth_master = hash('sha512', OC::$server->getUserSession()->getUser()->getUID() . OC::$server->getConfig()->getUserValue(OC::$server->getUserSession()->getUser()->getUID(), 'passwords', 'master_password', '0')) == $_GET['token'];
-		} else {
-			$auth_master = false;
-		}
+		$auth_type = \OC::$server->getConfig()->getUserValue(\OC::$server->getUserSession()->getUser()->getUID(), 'passwords', 'extra_auth_type', 'owncloud');
 
-		if ($auth_type == 'owncloud' OR ($auth_type == 'master' AND $auth_master == false)) { 
+		if (($auth_type == 'owncloud' OR $auth_type == 'master') AND $_COOKIE["oc_passwords_auth"] != hash('sha512', \OC::$server->getUserSession()->getUser()->getUID())) { 
 
 			script('passwords', 'auth'); ?>
 			
@@ -50,6 +45,7 @@
 			script('passwords', 'sorttable');
 			script('passwords', 'spectrum'); // colour picker
 			script('passwords', 'ZeroClipboard'); // clipboard function
+
 			?>
 
 			<div id="app">
