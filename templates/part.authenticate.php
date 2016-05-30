@@ -1,25 +1,27 @@
 <?php
-	$auth_type = OC::$server->getConfig()->getUserValue(OC::$server->getUserSession()->getUser()->getUID(), 'passwords', 'extra_auth_type', 'none');
+	$auth_type = OC::$server->getConfig()->getUserValue(OC::$server->getUserSession()->getUser()->getUID(), 'passwords', 'extra_auth_type', 'owncloud');
 	$instancename = $theme->getName();
 	$passwordsname = $l->t("Passwords");
 	$passwordsversion = OC::$server->getConfig()->getAppValue('passwords', 'installed_version', '');
 
-	if ($auth_type == 'owncloud') {
-		$auth_type = preg_replace('/owncloud/i', $theme->getName(), $l->t('ownCloud password'));
-	} elseif ($auth_type == 'master') {
-		$auth_type = $l->t('Master password');
+	switch ($auth_type) {
+		case 'master':
+			$auth_str = $l->t('Master password');
+			break;
+		case 'owncloud':
+		default:
+			$auth_str = preg_replace('/owncloud/i', $theme->getName(), $l->t('ownCloud password'));
+			break;
 	}
+
 ?>
 <div id="auth_div">
 	<h2><?php p($l->t('Authenticate')); ?>:</h2>
 	<form id="auth_form">
-		<input id="auth_pass" type="password" placeholder="<?php p($auth_type); ?>"><br>
-		<?php
-		if (isset($_GET['token'])) { ?>
-			<p id="invalid_auth"><?php p($l->t('This password is invalid. Please try again.')); ?></p>
-		<?php }	?>
+		<input id="auth_pass" type="password" placeholder="<?php p($auth_str); ?>" auth-type="<?php p($auth_type); ?>"><br>
+		<p id="invalid_auth"><?php p($l->t('This password is invalid. Please try again.')); ?></p>
 		<input class="button primary" type="submit" id="auth_btn" value="<?php p($l->t('Authenticate')); ?>">
-		<p><?php p($l->t('You need to authenticate using a password.')); ?> <a id="href_settings"><?php p($l->t('This can be changed in your settings')); ?></a>.</p>
+		<p><?php p($l->t('You need to authenticate using your password.')); ?> <a id="href_settings"><?php p($l->t('This can be changed in your settings')); ?></a>.</p>
 	</form>
 </div>
 <div id="auth_footer">
