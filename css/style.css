@@ -492,6 +492,7 @@ td:hover > .edit_value {
 	margin-top: 20px;
 }
 #invalid_auth {
+	display: none;
 	background-color: #a00;
 	color: #fff;
 	width: 30%;
@@ -499,7 +500,7 @@ td:hover > .edit_value {
 	margin-top: 0px !important;
 	font-weight: bold;
 	padding: 5px;
-	border-radius: 30px;
+	border-radius: 5px;
 }
 #lock_btn {
 	width: 70%;
