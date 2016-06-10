@@ -12,6 +12,7 @@
 * Added 'Stop sharing' button to popup for passwords that has been shared
 * Added 'Clear' button to popup
 * Added support for Danish, Romanian, Russian and Turkish. Now available in 21 languages: English, German, Spanish, French, Italian, Dutch, Danish, Czech, Norwegian Bokmål, Russian, Polish, Portuguese (Brazil), Portuguese (Portugal), Turkish, Swedish, Catalan, Hebrew, Romanian, Albanian, Icelandic and Galician.
+* Removed ZeroClipboard in favour of Clipboard.js, so Flash is fully eliminated and support has been extended except for Safari
 * CSS-fixes for checkboxes to comply with ownCloud
 * Fix for notes and categories not being saved on unshared passwords
 * Fix for sharing with users whose username contains a `.` or `@`
