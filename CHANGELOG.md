@@ -8,7 +8,7 @@
 * Added support for different app locations. If you use `/owncloud/apps2/passwords` for an instance, this will now be supported too. Admins can change this in the admin settings of ownCloud.
 * Added support for PostgreSQL (again)
 * Added 'Share' button to cell menu
-* Added 'Clone' button to cell menu; e.g. with this button you can clone/recreate a password has been shared to you
+* Added 'Clone' button to cell menu; e.g. with this button you can clone/recreate a password that has been shared to you
 * Added 'Stop sharing' button to popup for passwords that has been shared
 * Added immediate clipboard copy when you click on a username or password, hidden or not
 * Added 'Clear' button to popup
