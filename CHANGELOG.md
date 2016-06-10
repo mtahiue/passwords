@@ -23,6 +23,7 @@
 * Fix for sharing with users whose username contains a `.` or `@`
 * Fix for SQLite databases
 * Fix for many small CSS bugs
+* Fixed ownCloud dialogs so they actually work and the buttons are in sight
 
 ####18.0 - Apr 4th, 2016
 * **Added sharing!** Share all your passwords with others (you can trust)!
