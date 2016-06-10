@@ -10,12 +10,13 @@
 * Added 'Share' button to cell menu
 * Added 'Clone' button to cell menu; e.g. with this button you can clone/recreate a password has been shared to you
 * Added 'Stop sharing' button to popup for passwords that has been shared
+* Added immediate clipboard copy when you click on a username or password, hidden or not
 * Added 'Clear' button to popup
 * Added support for Danish, Romanian, Russian and Turkish. Now available in 21 languages: English, German, Spanish, French, Italian, Dutch, Danish, Czech, Norwegian Bokmål, Russian, Polish, Portuguese (Brazil), Portuguese (Portugal), Turkish, Swedish, Catalan, Hebrew, Romanian, Albanian, Icelandic and Galician.
 * Added auto load of website picture (favicon) when creating a password so it is instantly visible
 * Changed appearance of left navigation pane, including removal of password form (which has moved to a popup)
 * Changed password generation (pre-)algorithm, it now loops 10 times and returns the strongest of them
-* Removed ZeroClipboard in favour of Clipboard.js, so Flash is fully eliminated and support has been extended except for Safari
+* Removed ZeroClipboard in favour of Clipboard.js, so Flash is fully eliminated and copy support has been extended (except for Safari)
 * CSS-fixes for checkboxes to comply with the ownCloud 9 standard
 * Fixed responsive design, especially for mobile screens (Passwords looks great on iPhone!)
 * Fix for notes and categories not being saved on unshared passwords
