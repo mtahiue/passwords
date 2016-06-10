@@ -593,6 +593,9 @@ hr {
 #lock_btn:hover {
 	background-color: #d00;
 }
+#add_password_div {
+	display: none;
+}
 #new_generate,
 #new_website,
 #new_address,
@@ -601,11 +604,11 @@ hr {
 #new_category select,
 #new_category p,
 #new_notes {
-	margin-left: 5px;
-	margin-bottom: 5px;
-	width: 437px;
-	height: 26px;
-	padding-top: 3px;
+	margin-left: 1%;
+	margin-bottom: 1%;
+	width: 90%;
+	height: 28px;
+	padding-top: 2px;
 }
 #new_generate {
 	margin-left: 33px;
@@ -626,24 +629,23 @@ hr {
 	height: 52px !important;
 }
 .icon-rename {
-	margin-bottom: 22px;
+	margin-top: -45px;
 }
 #popupContent img {
-	width: 18px;
+	width: 4%;
 	opacity: 0.5;
 	background-size: 100%;
-	vertical-align: sub;
-	margin-left: 10px
+	vertical-align: middle;
+	margin-left: 2%;
+	height: 28px;
+	background-repeat: no-repeat;
+	background-position: center center;
 }
 .password_field {
 	font-family: Consolas, Courier !important;
 	font-size: 1.1em !important;
 }
-#gen_lower,
-#gen_upper,
-#gen_numbers,
-#gen_special,
-#gen_length,
+#generate_passwordtools label,
 #generate_strength {
 	margin-left: 10%;
 }
