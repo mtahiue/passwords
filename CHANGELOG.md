@@ -1,6 +1,18 @@
-####18.1 - NOT YET RELEASED
-* Added 'Stop sharing' button to popup
-* Added Danish, Romanian, Russian and Turkish. Now available in 21 languages: English, German, Spanish, French, Italian, Dutch, Danish, Czech, Norwegian Bokmål, Russian, Polish, Portuguese (Brazil), Portuguese (Portugal), Turkish, Swedish, Catalan, Hebrew, Romanian, Albanian, Icelandic and Galician.
+####19-beta - NOT YET RELEASED
+* Added the possibility for a master password! Users can choose between their own ownCloud password (default after you update), a self chosen master password or no extra password at all.
+ * A master password will be hashed with a 512-bit SHA2-hash. This hash contains no retrievable information and is useless, even for database administrators. It will only be used to verify it with the hashed version of the user input.
+ * This is particularly handy when other users know your ownCloud password (for practical reasons).
+ * Master passwords do not re-encrypt existing passwords, it is only used for entering the app.
+ * The countdown timer will lock the app instead of log you off when it reaches zero and you use an extra authentication
+* Added 'Lock app' button as option for users who have set an extra authentication
+* Added support for different app locations. If you use `/owncloud/apps2/passwords` for an instance, this will now be supported too. Admins can change this in the admin settings of ownCloud.
+* Added support for PostgreSQL (again)
+* Added 'Share' button to cell menu
+* Added 'Clone' button to cell menu; e.g. with this button you can clone/recreate a password has been shared to you
+* Added 'Stop sharing' button to popup for passwords that has been shared
+* Added 'Clear' button to popup
+* Added support for Danish, Romanian, Russian and Turkish. Now available in 21 languages: English, German, Spanish, French, Italian, Dutch, Danish, Czech, Norwegian Bokmål, Russian, Polish, Portuguese (Brazil), Portuguese (Portugal), Turkish, Swedish, Catalan, Hebrew, Romanian, Albanian, Icelandic and Galician.
+* CSS-fixes for checkboxes to comply with ownCloud
 * Fix for notes and categories not being saved on unshared passwords
 * Fix for sharing with users whose username contains a `.` or `@`
 * Fix for SQLite databases
