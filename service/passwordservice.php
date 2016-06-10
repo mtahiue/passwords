@@ -159,7 +159,7 @@ class PasswordService {
 
 		// remove old sharekeys and shares of this password
 		$removesharekey = $this->mapper->deleteSharesbyID($id);
-		if (count($sharewith) > 0) {
+		if (count($sharewith) > 0 AND $sharewith != '') {
 			if (function_exists('random_bytes')) {
 				// PHP 7 only
 				$sharekey = bin2hex(random_bytes(32)); 
@@ -185,7 +185,7 @@ class PasswordService {
 			'"datechanged" : "' . $datechanged . '", ' .
 			'"notes" : "' . $notes . '"';
 
-		if (count($sharewith) > 0) {
+		if (count($sharewith) > 0 AND $sharewith != '') {
 			$properties = 
 				$properties . ', ' .
 				'"sharekey" : "' . $sharekey . '", ' .
