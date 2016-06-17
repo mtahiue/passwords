@@ -9,7 +9,7 @@
 * Readded support for PostgreSQL (changed database format for BLOB-types)
 * Added 'Share' button to cell menu
 * Added 'Clone' button to cell menu; e.g. with this button you can clone/recreate a password that has been shared to you
-* Added 'Stop sharing' button to popup for passwords that has been shared
+* Added 'Stop sharing' button to popup for passwords that have been shared
 * Added immediate clipboard copy when you click on a username or password, hidden or not
 * Added 'Clear' button to popup
 * Added support for Danish, Romanian, Russian and Turkish. Now available in 21 languages: English, German, Spanish, French, Italian, Dutch, Danish, Czech, Norwegian Bokmål, Russian, Polish, Portuguese (Brazil), Portuguese (Portugal), Turkish, Swedish, Catalan, Hebrew, Romanian, Albanian, Icelandic and Galician.
